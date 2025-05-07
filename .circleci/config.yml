@@ -31,18 +31,21 @@ jobs:
             git config --global user.email "zerahabba1@gmail.com"
             git config --global user.name "Zerah"
             cd kube_manifest
-            # Ensure main branch is checked out
             git checkout main || git checkout -b main
             git pull origin main
-            echo $TAG
+            echo "Updating to tag: build-$TAG"
             sed -i "s/build-.*/build-$TAG/g" manifest/deployment.yaml
             cat manifest/deployment.yaml
+
+            # Skip if no changes were made
+            git diff --quiet && echo "No changes to commit. Skipping push." && exit 0
+
             git add .
             git commit -m "new build with imgTag build-$TAG"
-            # ⏱ Increased timeout to 10 minutes
             git config credential.helper 'cache --timeout=600'
-            #  Removed quiet push flag for verbose output
-            git push https://$GITHUB_PERSONAL_TOKEN@github.com/qwe324fsf1324ffjgi/kube_manifest.git main
+
+            # Add timeout to avoid indefinite hang
+            timeout 120 git push https://$GITHUB_PERSONAL_TOKEN@github.com/qwe324fsf1324ffjgi/kube_manifest.git main
 
 workflows:
   GitOpsflow:
