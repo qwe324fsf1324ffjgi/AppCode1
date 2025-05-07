@@ -44,8 +44,8 @@ jobs:
             git commit -m "new build with imgTag build-$TAG"
             git config credential.helper 'cache --timeout=600'
 
-            # Add timeout to avoid indefinite hang
-            timeout 120 git push https://$GITHUB_PERSONAL_TOKEN@github.com/qwe324fsf1324ffjgi/kube_manifest.git main
+            # Push without timeout
+            git push https://$GITHUB_PERSONAL_TOKEN@github.com/qwe324fsf1324ffjgi/kube_manifest.git main
 
 workflows:
   GitOpsflow:
