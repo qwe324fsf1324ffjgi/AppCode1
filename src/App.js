@@ -87,7 +87,7 @@ class App extends Component {
                         fontWeight: "bolder",
                     }}
                 >
-                    ZERAH - TODO LIST
+                    ZERAH ABBA - TODO LIST
                 </Row>
   
                 <hr />
